@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/PivnoyFei/task_for_polimedika/actions/workflows/pol_actions.yml/badge.svg?branch=main)](https://github.com/PivnoyFei/task_for_polimedika/actions/workflows/pol_actions.yml)
+[![Build Status](https://github.com/PivnoyFei/task_for_polimedika/actions/workflows/pol_actions.yml/badge.svg)](https://github.com/PivnoyFei/task_for_polimedika/actions/workflows/pol_actions.yml)
 
 <h1 align="center"><a target="_blank" href="">Университет</a></h1>
 
