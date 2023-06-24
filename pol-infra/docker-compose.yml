@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  pol-db:
+    container_name: ${POSTGRES_DB}
+    image: postgres:14.6
+    restart: always
+    volumes:
+      - pol-db_value:/var/lib/postgresql/data/
+    command: -p ${POSTGRES_PORT}
+    expose:
+      - ${POSTGRES_PORT}
+    env_file:
+      - ./.env
+
+  pol-backend:
+    container_name: pol-backend
+    build:
+      context: ../application
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8000"
+    volumes:
+      - ../application:/srv/www/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - pol-db
+
+volumes:
+  pol-db_value:
