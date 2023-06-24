@@ -1,17 +1,18 @@
-from typing import Any
-
 from fastapi import FastAPI
-from fastapi.exceptions import RequestValidationError
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from pydantic.error_wrappers import ValidationError
-from starlette.exceptions import HTTPException
-from starlette.requests import Request
 
-from application.config import BACKEND_CORS_ORIGINS
-from application.database import Base, engine
-from application.exceptions import message
+# from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+
+# from application.database import Base, engine
+# from application.exceptions import message
 from application.router import router
+from application.settings import BACKEND_CORS_ORIGINS
+
+# from fastapi.responses import JSONResponse
+# from pydantic.error_wrappers import ValidationError
+# from starlette.exceptions import HTTPException
+# from starlette.requests import Request
+
 
 app = FastAPI(
     title="Test task for polimedika",

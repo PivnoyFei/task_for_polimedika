@@ -1,6 +1,4 @@
-from datetime import datetime
-
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Table, Text
+from sqlalchemy import Column, ForeignKey, Integer, Table
 from sqlalchemy.orm import relationship
 
 from application.database import Base
@@ -21,15 +19,6 @@ course_program_independent_work = Table(
         ForeignKey("course_program.id", ondelete="CASCADE"),
     ),
     # PrimaryKeyConstraint("independent_work_id", "course_program_id"),
-)
-
-# Assoc table for Course and Semester
-course_semester = Table(
-    "course_semester",
-    Base.metadata,
-    Column("course_id", Integer, ForeignKey("course.id", ondelete="CASCADE")),
-    Column("semester_id", Integer, ForeignKey("semester.id", ondelete="CASCADE")),
-    # PrimaryKeyConstraint("course_id", "semester_id"),
 )
 
 
@@ -62,52 +51,6 @@ class CourseProgram(Base, TimeStampMixin, BaseMixin):
     )
 
 
-class Exam(Base, TimeStampMixin, BaseMixin):
-    """Экзамен."""
-
-    __tablename__ = "exam"
-
-
-class Faculty(Base, TimeStampMixin, BaseMixin):
-    """Факультет."""
-
-    __tablename__ = "faculty"
-
-    curriculum = relationship("Curriculum", backref="faculty_curriculum")
-
-
-class Curriculum(Base, TimeStampMixin, BaseMixin):
-    """
-    Учебный план.
-    У каждого факультета несколько учебных планов.
-    """
-
-    __tablename__ = "curriculum"
-
-    start_at = Column(DateTime, nullable=False)
-    end_at = Column(DateTime, nullable=False)
-    faculty_id = Column(Integer, ForeignKey("faculty.id", ondelete="SET NULL"))
-
-    group = relationship("Group", backref="curriculum_group")
-
-
-class Semester(Base, TimeStampMixin):
-    """Семестр."""
-
-    __tablename__ = "semester"
-
-    id = Column(Integer, primary_key=True)
-    num = Column(Integer, nullable=False)
-    year = Column(Integer, default=datetime.now().date().year)
-    curriculum_id = Column(Integer, ForeignKey("curriculum.id", ondelete="SET NULL"))
-
-    course = relationship(
-        "Course",
-        secondary=course_semester,
-        back_populates="semester",
-    )
-
-
 class Course(Base, TimeStampMixin, BaseMixin):
     """Курс."""
 
@@ -117,6 +60,6 @@ class Course(Base, TimeStampMixin, BaseMixin):
 
     semester = relationship(
         "Semester",
-        secondary=course_semester,
+        secondary="course_semester",
         back_populates="course",
     )

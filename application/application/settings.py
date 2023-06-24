@@ -1,6 +1,8 @@
 import os
 
 from dotenv import load_dotenv
+from fastapi import status as S
+from fastapi.responses import JSONResponse
 from pydantic import AnyHttpUrl
 
 load_dotenv()
@@ -24,5 +26,14 @@ SQLALCHEMY_DATABASE_URI = (
 )
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DELETE_RESPONSES = {
+    S.HTTP_404_NOT_FOUND: {"model": None, "description": "Запрошенного обьекта не существует"},
+    S.HTTP_204_NO_CONTENT: {"model": None, "description": "Успешное удаление"},
+}
+GET_RESPONSES = {
+    S.HTTP_200_OK: {"description": "Успешный ответ"},
+    S.HTTP_404_NOT_FOUND: {"model": None, "description": "Запрошенного обьекта не существует"},
+}
+NOT_FOUND = JSONResponse({"detail": "NotFound"}, S.HTTP_404_NOT_FOUND)
 
 PAGINATION_SIZE = 10

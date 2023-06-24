@@ -35,18 +35,6 @@ class Student(Base, TimeStampMixin):
         return f"{self.first_name} {self.last_name}"
 
 
-class Grade(Base, TimeStampMixin):
-    """Оценка за экзамен."""
-
-    __tablename__ = "grade"
-    __table_args__ = (UniqueConstraint("student_id", "exam_id", name="unique_student_exam"),)
-
-    id = Column(Integer, primary_key=True)
-    grade = Column(String, nullable=False)
-    student_id = Column(Integer, ForeignKey("student.id", ondelete="CASCADE"))
-    exam_id = Column(Integer, ForeignKey("exam.id", ondelete="CASCADE"))
-
-
 class StudentIndependentWork(Base, TimeStampMixin):
     """Оценка за задание для самостоятельной работы."""
 
